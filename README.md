@@ -2,10 +2,11 @@
 <h1 align="center">Film's Perfomance</h1>
 <p align="center">A program that computes the average of the films per country.</p>
 <p align="center">
-	<img src="https://img.shields.io/github/languages/code-size/EncryptEx/perfomance-of-films?label=Size"/>
+	<img src="https://img.shields.io/github/languages/code-size/EncryptEx/perfomance-of-films?label=Code Size"/>
+	<img src="https://img.shields.io/github/languages/code-size/EncryptEx/perfomance-of-films?label=Code Size"/>
 	<img src="https://img.shields.io/github/last-commit/EncryptEx/perfomance-of-films"/>
-	<img src="https://img.shields.io/github/contributors/EncryptEx/perfomance-of-films"/>
-	<a href="https://discord.gg/q6Wh3jN"><img src="https://img.shields.io/discord/714403840207749174"/></a>
+	<img src="https://img.shields.io/github/v/release/EncryptEx/perfomance-of-films?label=Version%20"/>
+	<a href="https://discord.gg/q6Wh3jN"><img src="https://img.shields.io/discord/714403840207749174?label=Discord"/></a>
 
 ## Pre requisites  
 [Python 3.x Installed](https://www.python.org/downloads/)  
@@ -20,13 +21,18 @@
 3. Then, run the program.  
 
 **If you don't know how the program works, don't skip any step. AND BE PATIENT**  
+## Pre Work and Database Pre-created/downloaded files
+[movies.sqlite](https://mega.nz/file/j98CVIqS#nSc_otTRFejnfVKxj1jM_LgLV8AE_rAYxj0z-b04EM8)    
+[title.tsv](https://mega.nz/file/D89CWYzZ#bHBRJcE1xEOL-gQ9aP8FdpDhjc-JeIyKBuKWIqQ4gM8)  
+[ratings.tsv](https://mega.nz/file/CtkWUaCC#rVY8EZOhwS1V9UF-p2IHQg_6X0kRo0yUTZ012-_w3HM)  
+
   
 ## My Story 'n Problems while coding:  
 I had to discard the films that:
-> Duplicated Films
-> Didn't have a country
-> Films that didn't have a rating
-> Films with "fake" country names: (with slashes or dashes.)
+> Duplicated Films  
+> Didn't have a country  
+> Films that didn't have a rating  
+> Films with "fake" country names: (with slashes or dashes.)  
  
 So, after discarding i changed from 10 M (dirty data) rows to 1 M clean (full data) rows.  
 
