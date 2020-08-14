@@ -2,8 +2,8 @@
 <h1 align="center">Film's Perfomance</h1>
 <p align="center">A program that computes the average of the films per country.</p>
 <p align="center">
-	<img src="https://img.shields.io/github/languages/code-size/EncryptEx/perfomance-of-films?label=Code Size"/>
-	<img src="https://img.shields.io/github/languages/code-size/EncryptEx/perfomance-of-films?label=Code Size"/>
+	<img src="https://img.shields.io/github/languages/code-size/EncryptEx/perfomance-of-films?label=Code%20Size"/>
+	<img src="https://img.shields.io/badge/DB%20Size-1%2C3%20GB-blue"/>
 	<img src="https://img.shields.io/github/last-commit/EncryptEx/perfomance-of-films"/>
 	<img src="https://img.shields.io/github/v/release/EncryptEx/perfomance-of-films?label=Version%20"/>
 	<a href="https://discord.gg/q6Wh3jN"><img src="https://img.shields.io/discord/714403840207749174?label=Discord"/></a>
