@@ -152,7 +152,7 @@ else:
     cur.execute('''SELECT * FROM movies''')
     movies = list()
     for row in cur:
-        movies.append((str(row[1]), str(row[3])))
+        movies.append((str(row[1]), str(row[2])))
     average = dict()
     timescountry = dict()
     final = dict()
