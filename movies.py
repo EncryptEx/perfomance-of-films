@@ -4,12 +4,31 @@ cur = conn.cursor()
 import time
 from os import system, name 
 import re
+import eel
 # Coded by EncryptEx - github.com/EsncryptEx
 cur.execute('''CREATE TABLE IF NOT EXISTS "movies" ("id" TEXT NOT NULL,"country" TEXT, "rating" TEXT, UNIQUE('id'))''')
 
 cur.execute('''SELECT * FROM movies ORDER BY id DESC LIMIT 1''')
 row = cur.fetchone()
 name = row[0]
+
+eel.init('web')
+skip1 = True
+skip2 = True
+skip3 = True
+skip4 = True
+
+
+
+@eel.expose
+def setsteps(a,b,c,d):
+    print("I got a parameter: ", a, b,c,d)
+    global skip1, skip2, skip3, skip4
+    skip1 = a
+    skip2 = b
+    skip3 = c 
+    skip4 = d
+
 system("cls")
 print("\n")
 print("███████╗██╗██╗     ███╗   ███╗ █╗ ███████╗")
@@ -49,42 +68,42 @@ commits = 0
 #-----------
 #Only modify this on debbugging :)
 #Recomendable to set all to false
-skip1 = input("Skip Step 1? (Y/N)")
-if skip1 == "Y" or skip1 == "N" or skip1 == "y" or skip1 == "n": 
-    if skip1 == "Y" or skip1 == "y":
-        skip1 = True
-    else:
-        skip1 = False
-else:
-    print("Answer not correct") 
-    quit()
-skip2 = input("Skip Step 2? (Y/N)")
-if skip2 == "Y" or skip2 == "N" or skip2 == "y" or skip2 == "n": 
-    if skip2 == "Y" or skip2 == "y":
-        skip2 = True
-    else:
-        skip2 = False
-else:
-    print("Answer not correct") 
-    quit()
-skip3 = input("Skip Step 3? (Y/N)")
-if skip3 == "Y" or skip3 == "N" or skip3 == "y" or skip3 == "n": 
-    if skip3 == "Y" or skip3 == "y":
-        skip3 = True
-    else:
-        skip3 = False
-else:
-    print("Answer not correct") 
-    quit()
-skip4 = input("Skip Step 4? (Y/N)")
-if skip4 == "Y" or skip4 == "N" or skip4 == "y" or skip4 == "n": 
-    if skip4 == "Y" or skip4 == "y":
-        skip4 = True
-    else:
-        skip4 = False
-else:
-    print("Answer not correct") 
-    quit()
+# skip1 = input("Skip Step 1? (Y/N)")
+# if skip1 == "Y" or skip1 == "N" or skip1 == "y" or skip1 == "n": 
+#     if skip1 == "Y" or skip1 == "y":
+#         skip1 = True
+#     else:
+#         skip1 = False
+# else:
+#     print("Answer not correct") 
+#     quit()
+# skip2 = input("Skip Step 2? (Y/N)")
+# if skip2 == "Y" or skip2 == "N" or skip2 == "y" or skip2 == "n": 
+#     if skip2 == "Y" or skip2 == "y":
+#         skip2 = True
+#     else:
+#         skip2 = False
+# else:
+#     print("Answer not correct") 
+#     quit()
+# skip3 = input("Skip Step 3? (Y/N)")
+# if skip3 == "Y" or skip3 == "N" or skip3 == "y" or skip3 == "n": 
+#     if skip3 == "Y" or skip3 == "y":
+#         skip3 = True
+#     else:
+#         skip3 = False
+# else:
+#     print("Answer not correct") 
+#     quit()
+# skip4 = input("Skip Step 4? (Y/N)")
+# if skip4 == "Y" or skip4 == "N" or skip4 == "y" or skip4 == "n": 
+#     if skip4 == "Y" or skip4 == "y":
+#         skip4 = True
+#     else:
+#         skip4 = False
+# else:
+#     print("Answer not correct") 
+#     quit()
 #-----------
 if skip1:
     print("Skipped Step 1")
@@ -175,3 +194,4 @@ else:
     print("__________________")
     f.write("\n__________________\n")
     f.close()
+eel.start('index.html', size=(1000, 600))
