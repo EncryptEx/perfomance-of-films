@@ -104,7 +104,12 @@ if skip1:
     print("Skipped Step 1")
 else:
     print("This process can take a loooot of time. Think that there're 10 Million films at the Dataset.")
+
+    isfirstline = True
     for line in fh2:
+        if(isfirstline):
+            isfirstline = False
+            continue
 
         splittedline = line.split()
         titleid = splittedline[0]
