@@ -17,6 +17,3 @@ jobs:
         uses: py-actions/flake8@v1 
         with:
             ignore: "W601,F403"
-            exclude: "src/ignoreme.py"
-            max-line-length: "100"
-            path: "src"
