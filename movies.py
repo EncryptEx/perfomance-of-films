@@ -67,9 +67,14 @@ else:
 
 times = None
 commits = 0
+
+def nanswer():
+    print("Answer not correct")
+    quit()
+
 # -----------
 # Only modify this on debbugging :)
-# Recomendable to set all to false
+# Recomendable to set all to false/no
 skip1 = input("Skip Step 1? (Y/N)")
 if skip1.lower() in ['y', 'n']:
     if skip1 == "Y" or skip1 == "y":
@@ -77,8 +82,7 @@ if skip1.lower() in ['y', 'n']:
     else:
         skip1 = False
 else:
-    print("Answer not correct")
-    quit()
+    nanswer()
 skip2 = input("Skip Step 2? (Y/N)")
 if skip2.lower() in ['y', 'n']:
     if skip2.lower() == 'y':
@@ -86,8 +90,7 @@ if skip2.lower() in ['y', 'n']:
     else:
         skip2 = False
 else:
-    print("Answer not correct")
-    quit()
+    nanswer()
 skip3 = input("Skip Step 3? (Y/N)")
 if skip3.lower() in ['y', 'n']:
     if skip3.lower() == 'y':
@@ -95,8 +98,7 @@ if skip3.lower() in ['y', 'n']:
     else:
         skip3 = False
 else:
-    print("Answer not correct")
-    quit()
+    nanswer()
 skip4 = input("Skip Step 4? (Y/N)")
 if skip4.lower() in ['y', 'n']:
     if skip4.lower() == 'y':
@@ -104,8 +106,7 @@ if skip4.lower() in ['y', 'n']:
     else:
         skip4 = False
 else:
-    print("Answer not correct")
-    quit()
+    nanswer()
 # -----------
 if skip1:
     print("Skipped Step 1")
@@ -134,7 +135,7 @@ else:
             conn.commit()
             commits = commits + 1
             if commits >= 10:
-                tcommits+=10
+                tcommits += 10
                 clear()
                 print("Nº of commits done so far:", tcommits, "each one includes 10k lines")
                 print("Last line commited:", titleid)
@@ -146,7 +147,7 @@ else:
     print("Finished Step 1!")
 if skip2:
     print("Skipped Step 2")
-else: 
+else:
 
 
     print("This process can take a while. There will be like 4 Million Films to scan.")
@@ -190,10 +191,10 @@ else:
     print("__________________")
     f = open("results.txt", "a")
     f.write("\n__________________\n")
-    for country, rating in final.items(): 
-        if country[0] == "/" or country[0] == " " or country[0] == "'" or country[0] == "\\":
+    for country, rating in final.items():
+        if country[0] in ["/", " ", "'", "\\"]:
             continue
-        if country[1] == "/" or country[1] == " " or country[1] == "'" or country[1] == "\\":
+        if country[1] == ["/", " ", "'", "\\"]:
             continue
         toprint = "Country:", country, "Average:", final[country]
         print(toprint)

@@ -46,6 +46,10 @@ sudo apt-get install screen
 screen -S <session_name>
 ```
 
+Tip: ``Ctrl A + D`` To detach from a screen
+Tip2: ``screen -ls`` to see screen list
+Tip3: ``screen -r <name>`` to resume a screen
+
 And then run the program.
 
 **If you don't know how the program works, don't skip any step. AND BE PATIENT**
