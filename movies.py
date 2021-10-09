@@ -116,19 +116,20 @@ if skip1:
 else:
     print("This process can take a loooot of time. Think that there're 10 Million films at the Dataset.")
 
-    isfirstline = True
+    reallinenum = 0
     tcommits = 0
     for line in fh2:
-        if(isfirstline):
-            isfirstline = False
+        if(reallinenum == 0):
+            reallinenum = 1
             continue
 
         splittedline = line.split()
         titleid = splittedline[0]
         if (int(str(titleid).strip("tt")) <= int(str(name).strip("tt"))):
+            reallinenum += 1
             continue
         if (times is None):
-            print("Program resumed from line:", titleid)
+            print("Program resumed from line:", titleid, "line count:", reallinenum)
             times = 0
         country = line.split("       ")[0].split("\t")[4]
         times = times + 1
