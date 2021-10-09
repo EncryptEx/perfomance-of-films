@@ -113,7 +113,7 @@ else:
 
         splittedline = line.split()
         titleid = splittedline[0]
-        if (int(titleid) <= name):
+        if (int(str(titleid)[2:]) <= name):
             continue
         if (times is None):
             print("Program resumed from line:", titleid)
