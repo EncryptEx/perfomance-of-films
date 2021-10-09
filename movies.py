@@ -4,9 +4,10 @@ import sqlite3
 conn = sqlite3.connect('movies.sqlite')
 cur = conn.cursor()
 
+
 # clear screen function
 def clear():
-    if name == 'nt':
+    if os.name == 'nt':
         _ = os.system('cls')
     else:
         _ = os.system('clear')
