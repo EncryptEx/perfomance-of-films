@@ -1,15 +1,22 @@
+import time
+import os
+from os import system
 import sqlite3
 conn = sqlite3.connect('movies.sqlite')
 cur = conn.cursor()
-import time
-from os import system, name 
-import re
-# Coded by EncryptEx - github.com/EsncryptEx
+
+
+# get last line of file title.tsv
+with open('title.tsv', 'rb') as f:
+    f.seek(-2, os.SEEK_END)
+    while f.read(1) != b'\n':
+        f.seek(-2, os.SEEK_CUR)
+    last_line = f.readline().decode().split()[0][2:].strip()
+
+
+# Coded by EncryptEx - github.com/EncryptEx
 cur.execute('''CREATE TABLE IF NOT EXISTS "movies" ("id" TEXT NOT NULL,"country" TEXT, "rating" TEXT, UNIQUE('id'))''')
 
-cur.execute('''SELECT * FROM movies ORDER BY id DESC LIMIT 1''')
-row = cur.fetchone()
-name = row[0]
 system("cls")
 print("\n")
 print("███████╗██╗██╗     ███╗   ███╗ █╗ ███████╗")
@@ -25,16 +32,16 @@ print("██████╔╝█████╗  ██████╔╝█�
 print("██╔═══╝ ██╔══╝  ██╔══██╗██╔══╝  ██║   ██║██╔══██╗██║╚██╔╝██║██╔══██║██║╚██╗██║██║     ██╔══╝      ")
 print("██║     ███████╗██║  ██║██║     ╚██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╗███████╗    ")
 print("╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝    ")
-                                                                                                  
+
 print("\n")
 try:
     fh1 = open("ratings.tsv", encoding="utf8")
-except: 
+except FileNotFoundError:
     print("Couldn't find ratings.tsv")
     quit()
 try:
     fh2 = open("title.tsv", encoding="utf8")
-except:
+except FileNotFoundError:
     print("Couldn't find title.tsv")
     quit()
 
@@ -44,13 +51,17 @@ towrite = " -- FILM's AVERAGE PER COUNTRY -- " + time.ctime(time.time())
 f.write(towrite)
 f.close()
 
+cur.execute('''SELECT * FROM movies ORDER BY id DESC LIMIT 1''')
+row = cur.fetchone()
+name = row[0]
+
 times = None
 commits = 0
-#-----------
-#Only modify this on debbugging :)
-#Recomendable to set all to false
+# -----------
+# Only modify this on debbugging :)
+# Recomendable to set all to false
 skip1 = input("Skip Step 1? (Y/N)")
-if skip1 == "Y" or skip1 == "N" or skip1 == "y" or skip1 == "n": 
+if skip1.lower() in ['y', 'n']:
     if skip1 == "Y" or skip1 == "y":
         skip1 = True
     else:
@@ -59,8 +70,8 @@ else:
     print("Answer not correct") 
     quit()
 skip2 = input("Skip Step 2? (Y/N)")
-if skip2 == "Y" or skip2 == "N" or skip2 == "y" or skip2 == "n": 
-    if skip2 == "Y" or skip2 == "y":
+if skip2.lower() in ['y', 'n']:
+    if skip2.lower() == 'y':
         skip2 = True
     else:
         skip2 = False
@@ -68,8 +79,8 @@ else:
     print("Answer not correct") 
     quit()
 skip3 = input("Skip Step 3? (Y/N)")
-if skip3 == "Y" or skip3 == "N" or skip3 == "y" or skip3 == "n": 
-    if skip3 == "Y" or skip3 == "y":
+if skip3.lower() in ['y', 'n']:
+    if skip3.lower() == 'y':
         skip3 = True
     else:
         skip3 = False
@@ -77,45 +88,39 @@ else:
     print("Answer not correct") 
     quit()
 skip4 = input("Skip Step 4? (Y/N)")
-if skip4 == "Y" or skip4 == "N" or skip4 == "y" or skip4 == "n": 
-    if skip4 == "Y" or skip4 == "y":
+if skip4.lower() in ['y', 'n']:
+    if skip4.lower() == 'y':
         skip4 = True
     else:
         skip4 = False
 else:
-    print("Answer not correct") 
+    print("Answer not correct")
     quit()
-#-----------
+# -----------
 if skip1:
     print("Skipped Step 1")
 else:
     print("This process can take a loooot of time. Think that there're 10 Million films at the Dataset.")
-    for line in fh2:       
+    for line in fh2:
+
         splittedline = line.split()
         titleid = splittedline[0]
         if (titleid <= name):
             continue
-        if (times == None):
+        if (times is None):
             print("Program resumed from line:", titleid)
             times = 0
+        country = line.split("       ")[0].split("\t")[4]
         times = times + 1
-        precountry = re.findall("\s[A-Z]+\s", line[18:])
-        if (len(precountry) == 0):
-            country = "none"
-        else:
-            if (len(precountry) > 1):
-                country = str(precountry[0])
-                country = country[4:6]
-            else: 
-                country = str(precountry)
-                country = country[4:6]
-                cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', ( titleid, country ))
-        if times >= 2000:
+        cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', ( titleid, country ))
+        if times >= 4:
             times = 0
             conn.commit()
             commits = commits + 1
-            if commits >= 2000:
-                print("Refreshed DB 2000 times.")
+            if commits >= 100:
+                system("cls")
+                print(str(100 * float(str(titleid)[2:]) / float(str(last_line))) + "%")
+                commits = 0
             time.sleep(0.5)
     system("cls")
     system("pause")
@@ -123,6 +128,8 @@ else:
 if skip2:
     print("Skipped Step 2")
 else: 
+
+
     print("This process can take a while. There will be like 4 Million Films to scan.")
     times = 0
     commits = 0
