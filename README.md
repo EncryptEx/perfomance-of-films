@@ -12,14 +12,18 @@
 [Python 3.x Installed](https://www.python.org/downloads/)  
 
 ## Tutorial  
-1. Fist I download the ``title.akas.tsv.gz`` and then the ``title.ratings.tsv.gz`` ( I'll upload the files renamed and predownloaded, also, the DB file too.)  
+1. First, download the ``title.akas.tsv.gz`` file and the ``title.ratings.tsv.gz`` file too. ( I'll upload the files renamed and predownloaded, also, the DB file too. See section called [Fonts](https://github.com/EncryptEx/perfomance-of-films#fonts))  
   
 2. After decompressing them, place the data.tsv files at the same directory where the python program it is.  
 
 **Important**: Rename the data.tsv files to distinguish which one is the title.tsv and ratings.tsv.  
 
 3. Then, run the program.  
+```sh
+python3 movies.py
+```
 
+	
 **If you don't know how the program works, don't skip any step. AND BE PATIENT**  
 ## Pre Work and Database Pre-created/downloaded files
 [movies.sqlite](https://mega.nz/file/j98CVIqS#nSc_otTRFejnfVKxj1jM_LgLV8AE_rAYxj0z-b04EM8)    
