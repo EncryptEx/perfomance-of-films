@@ -1,9 +1,15 @@
 import time
 import os
-from os import system
 import sqlite3
 conn = sqlite3.connect('movies.sqlite')
 cur = conn.cursor()
+
+# clear screen function
+def clear():
+    if name == 'nt':
+        _ = os.system('cls')
+    else:
+        _ = os.system('clear')
 
 
 # get last line of file title.tsv
@@ -17,7 +23,7 @@ with open('title.tsv', 'rb') as f:
 # Coded by EncryptEx - github.com/EncryptEx
 cur.execute('''CREATE TABLE IF NOT EXISTS "movies" ("id" TEXT NOT NULL,"country" TEXT, "rating" TEXT, UNIQUE('id'))''')
 
-system("cls")
+clear()
 print("\n")
 print("███████╗██╗██╗     ███╗   ███╗ █╗ ███████╗")
 print("██╔════╝██║██║     ████╗ ████║ █║ ██╔════╝")
@@ -126,12 +132,12 @@ else:
             conn.commit()
             commits = commits + 1
             if commits >= 100:
-                system("cls")
+                clear()
                 print(str(100 * float(str(titleid)[2:]) / float(str(last_line))) + "%")
                 commits = 0
             time.sleep(0.5)
-    system("cls")
-    system("pause")
+    clear()
+    os.system("pause")
     print("Finished Step 1!")
 if skip2:
     print("Skipped Step 2")
