@@ -77,7 +77,7 @@ if skip1.lower() in ['y', 'n']:
     else:
         skip1 = False
 else:
-    print("Answer not correct") 
+    print("Answer not correct")
     quit()
 skip2 = input("Skip Step 2? (Y/N)")
 if skip2.lower() in ['y', 'n']:
@@ -120,7 +120,7 @@ else:
 
         splittedline = line.split()
         titleid = splittedline[0]
-        if (int(str(titleid)[2:]) <= name):
+        if (int(str(titleid)[2:]) <= int(name)):
             continue
         if (times is None):
             print("Program resumed from line:", titleid)
