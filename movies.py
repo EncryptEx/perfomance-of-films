@@ -128,13 +128,15 @@ else:
         country = line.split("       ")[0].split("\t")[4]
         times = times + 1
         cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', ( titleid, country ))
+        tcommits=0
         if times >= 1000:
             times = 0
             conn.commit()
             commits = commits + 1
             if commits >= 10:
+                tcommits+=10
                 clear()
-                print("Nº of commits done so far:", commits, "each one includes 10k lines")
+                print("Nº of commits done so far:", tcommits, "each one includes 10k lines")
                 print("Last line commited:", titleid)
                 print(str(100 * float(str(titleid)[2:]) / float(str(last_line))) + "%")
                 commits = 0
