@@ -68,6 +68,7 @@ else:
 times = None
 commits = 0
 
+
 def nanswer():
     print("Answer not correct")
     quit()
@@ -75,6 +76,8 @@ def nanswer():
 # -----------
 # Only modify this on debbugging :)
 # Recomendable to set all to false/no
+
+
 skip1 = input("Skip Step 1? (Y/N)")
 if skip1.lower() in ['y', 'n']:
     if skip1 == "Y" or skip1 == "y":
@@ -129,7 +132,7 @@ else:
             times = 0
         country = line.split("       ")[0].split("\t")[4]
         times = times + 1
-        cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', ( titleid, country ))
+        cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', (titleid, country))
         if times >= 1000:
             times = 0
             conn.commit()
@@ -147,9 +150,8 @@ else:
     print("Finished Step 1!")
 if skip2:
     print("Skipped Step 2")
+
 else:
-
-
     print("This process can take a while. There will be like 4 Million Films to scan.")
     times = 0
     commits = 0
@@ -158,7 +160,7 @@ else:
         splittedline = line.split()
         titleid = splittedline[0]
         rating = splittedline[1]
-        cur.execute('''UPDATE movies SET rating =? WHERE id=?''', ( rating, titleid ))
+        cur.execute('''UPDATE movies SET rating =? WHERE id=?''', (rating, titleid))
         if times >= 1000:
             times = 0
             conn.commit()
@@ -175,7 +177,8 @@ else:
 if skip4:
     print("Skipped Step 4")
 else:
-    print("Finally, it calculates the country film average and it displays it. Also it saves on a file called: results.txt")
+    print('''Finally, it calculates the country film average and it displays it.
+    Also it saves on a file called: results.txt''')
     cur.execute('''SELECT * FROM movies''')
     movies = list()
     for row in cur:
