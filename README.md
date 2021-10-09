@@ -82,4 +82,4 @@ Finally, the program computes the average per country and displays it out, it al
 [title.akas.tsv.gz](https://datasets.imdbws.com/title.akas.tsv.gz)  
 [title.ratings.tsv.gz](https://datasets.imdbws.com/title.ratings.tsv.gz)  
 
-<p align="center"><img src="http://randojs.com/images/barsSmall.gif" alt="Animated footer bars" width="100%"/></p>
+<p align="center"><img src="http://randojs.com/images/barsSmallTransparentBackground.gif" alt="Animated footer bars" width="100%"/></p>
