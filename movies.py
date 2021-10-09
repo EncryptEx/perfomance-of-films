@@ -113,6 +113,7 @@ else:
     print("This process can take a loooot of time. Think that there're 10 Million films at the Dataset.")
 
     isfirstline = True
+    tcommits = 0
     for line in fh2:
         if(isfirstline):
             isfirstline = False
@@ -128,7 +129,6 @@ else:
         country = line.split("       ")[0].split("\t")[4]
         times = times + 1
         cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', ( titleid, country ))
-        tcommits=0
         if times >= 1000:
             times = 0
             conn.commit()
