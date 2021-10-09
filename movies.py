@@ -53,7 +53,10 @@ f.close()
 
 cur.execute('''SELECT * FROM movies ORDER BY id DESC LIMIT 1''')
 row = cur.fetchone()
-name = row[0]
+if(row is None):
+    name = 0
+else:
+    name = row[0]
 
 times = None
 commits = 0
