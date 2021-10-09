@@ -19,7 +19,12 @@ with open('title.tsv', 'rb') as f:
     while f.read(1) != b'\n':
         f.seek(-2, os.SEEK_CUR)
     last_line = f.readline().decode().split()[0][2:].strip()
-
+    lastlinenum = 0
+    for line in f:
+        if(not line.startswith):
+            lastlinenum += 1
+            continue
+    print("File title.tsv has", lastlinenum, "lines")
 
 # Coded by EncryptEx - github.com/EncryptEx
 cur.execute('''CREATE TABLE IF NOT EXISTS "movies" ("id" TEXT NOT NULL,"country" TEXT, "rating" TEXT, UNIQUE('id'))''')
@@ -143,7 +148,8 @@ else:
                 clear()
                 print("Nº of commits done so far:", tcommits, "each one includes 10k lines")
                 print("Last line commited:", titleid)
-                print(str(100 * float(str(titleid)[2:]) / float(str(last_line))) + "%")
+                print("Real count of line:", reallinenum)
+                print(str(100 * float(str(reallinenum)[2:]) / float(str(last_line))) + "%")
                 commits = 0
             time.sleep(0.5)
     clear()
