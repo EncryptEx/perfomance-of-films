@@ -155,7 +155,7 @@ else:
         try:
             country = a[1]
         except IndexError:
-            print("IndexError: with line", a, line.split("  "), line)
+            print("IndexError: with line", a, line.split("\t"), line)
             quit()
         # country = line.split("       ")[0].split("\t")[3]
         times = times + 1
