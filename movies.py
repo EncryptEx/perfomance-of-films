@@ -145,12 +145,13 @@ else:
             print("Program resumed from line:", titleid, "line count:", reallinenum)
             times = 0
         # get country correctly:
-        f = list()
-        for element in line.split("\t"):
+
+        a = list()
+        for element in line.split("  "):
             element = element.strip()
             if(element != '' and len(element) < 3):
-                f.append(element)
-        country = f[3]
+                a.append(element)
+        country = a[1]
         # country = line.split("       ")[0].split("\t")[3]
         times = times + 1
         cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', (titleid, country))
