@@ -13,18 +13,28 @@ def clear():
         _ = os.system('clear')
 
 
-# get last line of file title.tsv
-with open('title.tsv', 'rb') as f:
-    f.seek(-2, os.SEEK_END)
-    while f.read(1) != b'\n':
-        f.seek(-2, os.SEEK_CUR)
-    last_line = f.readline().decode().split()[0][2:].strip()
-    lastlinenum = 0
+def getNumOfLines(filename):
+    # get last line of a file file
+    with open(filename, 'rb') as f:
+        f.seek(-2, os.SEEK_END)
+        while f.read(1) != b'\n':
+            f.seek(-2, os.SEEK_CUR)
+        last_line = f.readline().decode().split()[0].strip()
+        lastlinenum = 0
+        print("Getting last line of", filename)
+
+    f = open(filename)
     for line in f:
-        if(not line.startswith):
+        # count till find the last line
+        if(not line.startswith(last_line)):
             lastlinenum += 1
             continue
-    print("File title.tsv has", lastlinenum, "lines")
+    print("File", filename, "has", lastlinenum, "lines")
+    return lastlinenum
+
+
+lastlinenum = getNumOfLines("title.tsv")
+lastlinenumratings = getNumOfLines("ratings.tsv")
 
 # Coded by EncryptEx - github.com/EncryptEx
 cur.execute('''CREATE TABLE IF NOT EXISTS "movies" ("id" TEXT NOT NULL,"country" TEXT, "rating" TEXT, UNIQUE('id'))''')
@@ -149,7 +159,7 @@ else:
                 print("Nº of commits done so far:", tcommits, "each one includes 10k lines")
                 print("Last line commited:", titleid)
                 print("Real count of line:", reallinenum)
-                print(str(100 * float(str(reallinenum)[2:]) / float(str(last_line))) + "%")
+                print(str(100 * float(str(reallinenum)[2:]) / float(str(lastlinenum))) + "%")
                 commits = 0
             time.sleep(0.5)
     clear()
@@ -160,10 +170,13 @@ if skip2:
 
 else:
     print("This process can take a while. There will be like 4 Million Films to scan.")
-    times = 0
-    commits = 0
+    times = reallinenum = commits = tcommits = 0
     for line in fh1:
-        times = times + 1
+        if (reallinenum == 0):
+            reallinenum += 1
+            continue
+        reallinenum += 1
+        times += 1
         splittedline = line.split()
         titleid = splittedline[0]
         rating = splittedline[1]
@@ -171,9 +184,14 @@ else:
         if times >= 1000:
             times = 0
             conn.commit()
-            commits = commits + 1
-            if commits >= 1000:
-                print("Refreshed DB 1000 times.")
+            commits += 1
+            tcommits += 1
+            if commits >= 100:
+                print("Nº of commits done so far:", tcommits, "each one includes 100k lines")
+                print("Last line commited:", titleid)
+                print("Real count of line:", reallinenum)
+                print(str(100 * float(str(reallinenum)[2:]) / float(str(lastlinenumratings))) + "%")
+                commits = 0
             time.sleep(0.5)
 if skip3:
     print("Skipped Step 3")
