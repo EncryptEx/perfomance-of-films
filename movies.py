@@ -23,7 +23,7 @@ def getNumOfLines(filename):
         lastlinenum = 0
         print("Getting last line of", filename)
 
-    f = open(filename)
+    f = open(filename, encoding="utf8")
     for line in f:
         # count till find the last line
         if(not line.startswith(last_line)):
@@ -32,9 +32,6 @@ def getNumOfLines(filename):
     print("File", filename, "has", lastlinenum, "lines")
     return lastlinenum
 
-
-lastlinenum = getNumOfLines("title.tsv")
-lastlinenumratings = getNumOfLines("ratings.tsv")
 
 # Coded by EncryptEx - github.com/EncryptEx
 cur.execute('''CREATE TABLE IF NOT EXISTS "movies" ("id" TEXT NOT NULL,"country" TEXT, "rating" TEXT, UNIQUE('id'))''')
@@ -129,7 +126,8 @@ else:
 if skip1:
     print("Skipped Step 1")
 else:
-    print("This process can take a loooot of time. Think that there're 10 Million films at the Dataset.")
+    lastlinenum = getNumOfLines("title.tsv")
+    print("This process can take a loooot of time. Think that there're", lastlinenum, "films at the Dataset.")
 
     reallinenum = 0
     tcommits = 0
@@ -146,7 +144,14 @@ else:
         if (times is None):
             print("Program resumed from line:", titleid, "line count:", reallinenum)
             times = 0
-        country = line.split("       ")[0].split("\t")[4]
+        # get country correctly:
+        f = list()
+        for element in line.split("\t"):
+            element = element.strip()
+            if(element != '' and len(element) < 3):
+                f.append(element)
+        country = f[3]
+        # country = line.split("       ")[0].split("\t")[3]
         times = times + 1
         cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', (titleid, country))
         if times >= 1000:
@@ -159,17 +164,21 @@ else:
                 print("Nº of commits done so far:", tcommits, "each one includes 10k lines")
                 print("Last line commited:", titleid)
                 print("Real count of line:", reallinenum)
-                print(str(100 * float(str(reallinenum)[2:]) / float(str(lastlinenum))) + "%")
+                print(str(100 * float(str(reallinenum)) / float(str(lastlinenum))) + "%")
                 commits = 0
             time.sleep(0.5)
     clear()
-    os.system("pause")
-    print("Finished Step 1!")
+    # os.system("pause")
+    time.sleep(0.5)
+    print("")
+    print("Finished Step 1! Finished at", time.ctime(time.time()))
+    conn.commit()
 if skip2:
     print("Skipped Step 2")
 
 else:
-    print("This process can take a while. There will be like 4 Million Films to scan.")
+    lastlinenumratings = getNumOfLines("ratings.tsv")
+    print("This process can take a while. There will be like ", lastlinenumratings, " Films to scan.")
     times = reallinenum = commits = tcommits = 0
     for line in fh1:
         if (reallinenum == 0):
@@ -190,14 +199,14 @@ else:
                 print("Nº of commits done so far:", tcommits, "each one includes 100k lines")
                 print("Last line commited:", titleid)
                 print("Real count of line:", reallinenum)
-                print(str(100 * float(str(reallinenum)[2:]) / float(str(lastlinenumratings))) + "%")
+                print(str(100 * float(str(reallinenum)) / float(str(lastlinenumratings))) + "%")
                 commits = 0
             time.sleep(0.5)
 if skip3:
     print("Skipped Step 3")
 else:
     print("Fast proccess, it only deletes the films without a rating.")
-    cur.execute('''DELETE FROM movies WHERE rating = "N"''')
+    cur.execute('''DELETE FROM movies WHERE rating = "\\N"''')
     conn.commit()
 if skip4:
     print("Skipped Step 4")
@@ -207,6 +216,7 @@ else:
     cur.execute('''SELECT * FROM movies''')
     movies = list()
     for row in cur:
+        print(row)
         movies.append((str(row[1]), str(row[2])))
     average = dict()
     timescountry = dict()
@@ -219,11 +229,11 @@ else:
     print("__________________")
     f = open("results.txt", "a")
     f.write("\n__________________\n")
+    final = {k: v for k, v in sorted(final.items(), key=lambda item: item[1])}
+
     for country, rating in final.items():
-        if country[0] in ["/", " ", "'", "\\"]:
-            continue
-        if country[1] == ["/", " ", "'", "\\"]:
-            continue
+        # if country in ["/", "", "\\N",]:
+        #    continue
         toprint = "Country:", country, "Average:", final[country]
         print(toprint)
         f.write(str(toprint) + "\n")
