@@ -147,15 +147,11 @@ else:
             times = 0
         # get country correctly:
 
-        a = list()
-        for element in line.split("  "):
-            element = element.strip()
-            if(element != '' and len(element) < 3):
-                a.append(element)
+        csplittedline = line.split("\t")
         try:
-            country = a[1]
+            country = csplittedline[3]
         except IndexError:
-            print("IndexError: with line", a, line.split("\t"), line)
+            print("IndexError: with line", line.split("\t"), line)
             quit()
         # country = line.split("       ")[0].split("\t")[3]
         times = times + 1
