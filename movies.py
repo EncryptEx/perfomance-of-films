@@ -141,6 +141,7 @@ else:
         if (int(str(titleid).strip("tt")) <= int(str(name).strip("tt"))):
             reallinenum += 1
             continue
+        reallinenum += 1
         if (times is None):
             print("Program resumed from line:", titleid, "line count:", reallinenum)
             times = 0
@@ -151,7 +152,11 @@ else:
             element = element.strip()
             if(element != '' and len(element) < 3):
                 a.append(element)
-        country = a[1]
+        try:
+            country = a[1]
+        except IndexError:
+            print("IndexError: with line", a, line.split("  "), line)
+            quit()
         # country = line.split("       ")[0].split("\t")[3]
         times = times + 1
         cur.execute('''INSERT OR IGNORE INTO movies (id, country, rating) VALUES ( ?, ?, 0 )''', (titleid, country))
