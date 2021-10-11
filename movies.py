@@ -235,7 +235,10 @@ else:
     for country, rating in final.items():
         # if country in ["/", "", "\\N",]:
         #    continue
-        toprint = "Country:", country, "Average:", final[country], "Elements:", timescountry[country]
+        av = final[country]
+        el = timescountry[country]
+        rsum = average[country]
+        toprint = "Country:", country, "Average:", av, "Elements:", el, "Ratings sum:", rsum
         print(toprint)
         f.write(str(toprint) + "\n")
     print("__________________")
