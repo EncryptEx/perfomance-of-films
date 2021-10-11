@@ -218,6 +218,8 @@ else:
     cur.execute('''SELECT * FROM movies''')
     movies = list()
     for row in cur:
+        if(float(row[2]) == 0.0):
+            continue
         movies.append((str(row[1]), str(row[2])))
     average = dict()
     timescountry = dict()
