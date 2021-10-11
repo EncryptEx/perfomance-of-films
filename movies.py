@@ -235,7 +235,7 @@ else:
     for country, rating in final.items():
         # if country in ["/", "", "\\N",]:
         #    continue
-        toprint = "Country:", country, "Average:", final[country]
+        toprint = "Country:", country, "Average:", final[country], "Elements:", timescountry[country]
         print(toprint)
         f.write(str(toprint) + "\n")
     print("__________________")
