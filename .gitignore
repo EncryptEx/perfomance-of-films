@@ -1,2 +1,2 @@
-.sqlite
-.tsv
+*.sqlite
+*.tsv
